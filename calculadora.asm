@@ -265,7 +265,7 @@ main:
 		la $a0, result #imprime a string result
 		syscall
 
-		mul $a0, $t0, $t1 #calcula a multiplicacao dos valores salvos em $t0 e $t1 e salva em $a0
+		mul $a0, $t0, $t1 #calcula a multiplicacao dos valores salvos em $t0 * $t1 e salva em $a0
 
 		li $v0, 1 #carrega o cod de imprimir int
 		syscall #imprime o resultado salvo em $a0 = $t0 * $t1
@@ -313,7 +313,7 @@ main:
 		la $a0, result #imprime a string result
 		syscall
 
-		div $a0, $t0, $t1 #calcula a divisao dos valores salvos em $t0 e $t1 e salva em $a0
+		div $a0, $t0, $t1 #calcula a divisao dos valores salvos em $t0 / $t1 e salva em $a0
 
 		li $v0, 1 #carrega o cod de imprimir int
 		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
@@ -361,8 +361,9 @@ main:
 		la $a0, result #imprime a string result
 		syscall
 
-		#div $a0, $t0, $t1 FAZER CALCULO DA POTENCIACAO!!!!!!!!!!!
-		#######################calcula a potencia dos valores salvos em $t0 e $t1 e salva em $a0 => $a0 = $t0 ^ $t1
+		# FAZER CALCULO DA POTENCIACAO!!!!!!!!!!!
+		#calcula a potencia dos valores salvos em $t0 e $t1 e salva em $a0 => $a0 = $t0 ^ $t1
+		
 
 		li $v0, 1 #carrega o cod de imprimir int
 		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
@@ -405,9 +406,26 @@ main:
 
 		# FAZER CALCULO DA RAIZ QUADRADA!!!!!!!!!!! numero salvo em $t0, salvar o resultado em $a0
 		#######################calcula a raiz do valor salvo em $t0 e salva em $a0 => $a0 = raiz($t0)
+		#Initialize $t0 = n, $t1 = i = 0, $t2 = x = n = $a0, $t3 = n/2, (n = numero que quero tirar raiz)
+		#addi  $t1, $zero, 0 # $t1 = 0 (contador para o loop)
+		#add  $t2, $zero, $t0 # $t2 = $t0 = n = x 
+		#addi  $t3, $zero, 2 #t3 = 2
+		#div $t4, $t2, $t3 # $t4 = n/2 (metade do numero q quero tirar a raiz
+		
+		#jal loop_raiz
+		
+		#mtc1 $t0, $f0
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
+		
+		#sqrt.d $f0, $f0
+		
+		#mfc1 $a0, $f0
+		
+		
+		
+		li $v0, 2 #carrega o cod de imprimir int
+		lwc1 $f12, 0($a0)
+		syscall #imprime o resultado salvo em $a0 = raiz($t0)
 
 		li $v0, 4 #carrega o cod de imprimir string
 		la $a0, barra_ene #imprime a string \n
@@ -421,7 +439,25 @@ main:
 		#addi $sp, $sp, 8
 		#jr $ra
 	
-		j menu #volta pro menu de opcoes	
+		j menu #volta pro menu de opcoes
+		
+
+		
+	#loop_raiz:
+	#	div $t1, $t0, $t2 # $t1 = n/x 
+    	#	add $t1, $t1, $t2 # $t1 = $t1 + x
+    	#	#div $t1, $t1, $t3 #t1 = $t1 / 2
+    	#	srl $t1, $t1, 1
+   	#	blt $t1, $t4, loop_raiz
+    	#	#Else, move x into return register $v0
+    	#	move $a0, $t1 #move o valor em $t2 para $v0
+    	#	
+    	#	jr $ra
+    		
+ 
+    	
+	
+    	
 	#========================================================================================
 	
 	#============== Funcao de TABUADA =======================================================
@@ -545,6 +581,12 @@ main:
 
 		#div $a0, $t0, $t1 FAZER CALCULO DO FIBONACCI!!!!!!!!!!!
 		#######################calcula o fibonacci no intervalo dos valores salvos em $t0 e $t1 e salva em $a0 
+		#obs: $t0 = n1, $t1 = n2
+		li $t2, 2 # $t2 = aux = 2 (aux guarda quantos numeros ja temos na sequencia)
+		jal loop_fibonacci
+		
+		
+		#########################
 
 		li $v0, 1 #carrega o cod de imprimir int
 		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
@@ -562,6 +604,24 @@ main:
 		#jr $ra
 	
 		j menu #volta pro menu de opcoes	
+		
+		
+	loop_fibonacci:
+		#pegando os proximos dois numeros da sequencia fibonacci
+		add $t0, $t0, $t1 # n1 = n1 + n2
+		add $t1, $t1, $t0 #n2 = n2 + n1
+		
+		#guardando os numeros calculados no array
+		sw $t0, 0($t3)
+		sw $t1, 4($t3)
+		#e andando 'duas casas' no array, ou seja, 2 * 4 bytes, portanto, movendo 8 bytes
+		addiu $t3, $t3, 8
+		#atualizando o valor de aux = aux + 2 (pois ja adicionamos mais dois numeros fibonacci na sequencia
+		
+		j loop_fibonacci
+		jr $ra
+		
+		
 	#========================================================================================
 	
 	#============== Funcao de SAIR ==========================================================
