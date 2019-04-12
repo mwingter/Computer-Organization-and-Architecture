@@ -40,6 +40,11 @@ result:		.asciiz "==> O resultado da operacao eh = "
 str_erro:	.asciiz "Opcao invalida.\n"
 
 barra_ene:	.asciiz "\n"
+mensagem:	.asciiz "zero"
+
+.align 2
+	number_0: .float 0.00000001						#Raiz quadrada com erro menor ou igual a 0.00000001
+	number_1: .float 2.0
 
 .text
 		.globl main
@@ -386,77 +391,52 @@ main:
 	
 	#============== Funcao de RAIZ QUADRADA =================================================
 	raiz: #se num digitado = 5, realizar raiz
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
-		
 		### printando e lendo o numero digitado pelo usuario
 		li $v0, 4 # carrega o codigo de imprimir string
 		la $a0, num_unico # imprime a string num_unico
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 6						#Codigo para ler um double, o ponto flutuante lido sera armazenado no registrador $f0
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0 <=====
-		####
-
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+			
+		l.s $f1, number_0					#Setando o registrador $f1 com o number_0
+		l.s $f2, number_1					#Setando o registrador $f2 com o number_1
+		mov.s $f4, $f2						#$f4 sempre sera o valor anterior
+						 								
+	loop:							#raiz->numero digitado, "chute" inicial->x0 
+		div.s $f3, $f0, $f4				#fazendo a div->(raiz/x0)	
+		add.s $f3, $f3, $f4				#fazendo a sum->(div+x0)
+		div.s $f5, $f3, $f2				#fazendo a x1->(sum/2)
+							
+ 		c.le.s $f5, $f4					#Se x1 < x0, x2 = x0-x1
+		bc1t sub_1						
+		c.le.s $f4, $f5					#Se x1 > x0, x2 = x1-x0 
+		bc1t sub_2
+		  
+	loop_1 :
+		c.le.s $f6, $f1					#se x2 <= 0.00000001(Erro) o programa finalizara 
+		bc1t final_program				#se nao x0 = x1 e loop continuara
+		mov.s $f4, $f5				
+		j loop
+				
+	sub_1:
+		sub.s $f6, $f4, $f5
+		j loop_1
+	sub_2:
+		sub.s $f6, $f5, $f4
+		j loop_1
+						
+	final_program:
+		li $v0, 4					#Codigo para printar uma string 
+		la $a0, result					
 		syscall
-
-		# FAZER CALCULO DA RAIZ QUADRADA!!!!!!!!!!! numero salvo em $t0, salvar o resultado em $a0
-		#######################calcula a raiz do valor salvo em $t0 e salva em $a0 => $a0 = raiz($t0)
-		#Initialize $t0 = n, $t1 = i = 0, $t2 = x = n = $a0, $t3 = n/2, (n = numero que quero tirar raiz)
-		#addi  $t1, $zero, 0 # $t1 = 0 (contador para o loop)
-		#add  $t2, $zero, $t0 # $t2 = $t0 = n = x 
-		#addi  $t3, $zero, 2 #t3 = 2
-		#div $t4, $t2, $t3 # $t4 = n/2 (metade do numero q quero tirar a raiz
-		
-		#jal loop_raiz
-		
-		#mtc1 $t0, $f0
-
-		
-		#sqrt.d $f0, $f0
-		
-		#mfc1 $a0, $f0
-		
-		
-		
-		li $v0, 2 #carrega o cod de imprimir int
-		lwc1 $f12, 0($a0)
-		syscall #imprime o resultado salvo em $a0 = raiz($t0)
-
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+				
+		li $v0, 2 					#Codigo para printar um float
+		mov.s $f12, $f5					#Movendo o resultado da raiz quadrada para o registrador $f12 
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
-	
+			
 		j menu #volta pro menu de opcoes
 		
-
-		
-	#loop_raiz:
-	#	div $t1, $t0, $t2 # $t1 = n/x 
-    	#	add $t1, $t1, $t2 # $t1 = $t1 + x
-    	#	#div $t1, $t1, $t3 #t1 = $t1 / 2
-    	#	srl $t1, $t1, 1
-   	#	blt $t1, $t4, loop_raiz
-    	#	#Else, move x into return register $v0
-    	#	move $a0, $t1 #move o valor em $t2 para $v0
-    	#	
-    	#	jr $ra
-    		
- 
-    	
-	
     	
 	#========================================================================================
 	
@@ -511,85 +491,59 @@ main:
 	#========================================================================================
 	
 	#============== Funcao de FATORIAL ======================================================
-	main_fatorial: #se num digitado = 8, calcular fatorial
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
-		
+	fatorial:
 		### printando e lendo o numero digitado pelo usuario
 		li $v0, 4 # carrega o codigo de imprimir string
 		la $a0, num_unico # imprime a string num_unico
 		syscall
-
-		li $v0, 5 #operação de ler int - le o primeiro numero
+	
+		li $v0, 5 #lê o numero digitado
 		syscall
-		move $a0, $v0 #salva o valor lido em $t0 <=====
-		####
-
-
-
-		# FAZER CALCULO DO FATORIAL!!!!!!!!!!! numero salvo em $t0, salvar o resultado em $a0
-		#######################calcula o fatorial do valor salvo em $t0 e salva em $a0 => $a0 = fatorial($t0)
+	
+		move $a0, $v0 #salva em $a0 o num digitado pelo user
+	
+		jal fat
+	
+		move $t0, $a0 #salva em $t0 o num digitado
+		move $t1, $v0 #salva em $t1 o fatorial calculado
 		
-		jal fatorial
-		
-		move $t1, $v0 #t1 = retorno do fatorial
-		
-		
-		li $v0, 1 #carrega o cod de imprimir int
-		move $a0, $t1
+		li $v0, 4 #serviço 4 = imprimir string
+		la $a0, result #imprime a string "O resultado é: "
 		syscall
+	
+		li $v0, 1 #serviço 1 = imprime int
+		move $a0, $t1 #salva o valor de $t1 (=valor do fatorial calculado) em $a0 para poder printar
+		syscall #printei o valor do fatorial calculado
 		
-		###########
-
-		#li $v0, 
-		#syscall #imprime o resultado salvo em $a0 = $t0 / $t1
-		
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
-		syscall
-
 		li $v0, 4 #carrega o cod de imprimir string
 		la $a0, barra_ene #imprime a string \n
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
-
 	
 		j menu #volta pro menu de opcoes
-		
-	fatorial:
-		addi $sp, $sp, -8 #aloca espaço para dois inteiros na pilha
-		sw $a0, 0($sp) #salva o numero lido na primeira posicao da pilha
-		sw $ra, 4($sp) #salva o endereco de retorno na segunda posicao da pilha
-		addi $t0, $zero, 1 # $t0 = 1, condicao de parada
-		addi $v0, $zero, 1 #v0 = 1 (fat=1)
-		
+	
+	
+	fat:
+		addi $sp, $sp, -8 #desci na stack
+		sw $a0, 0($sp)
+		sw $ra, 4($sp)
+		addi $t3, $zero, 1
+		addi $v0, $zero, 1
+	
 	loop_fat:
-		ble $a0, $t0, sai_loop_fat
+		ble $a0, $t3, sai_loop
 		mul $v0, $v0, $a0
 		addi $a0, $a0, -1
 		j loop_fat
-		
-	sai_loop_fat:
+	
+	sai_loop:
 		lw $a0, 0($sp)
 		lw $ra, 4($sp)
 		addi $sp, $sp, 8
-		jr $ra
-		
+		jr $ra	
 	#========================================================================================
 	
 	#============== Funcao de FIBONACCI =====================================================
 	fibonacci: #se num digitado = 9, calcular fibonacci
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
 		
 		### printando e lendo os numeros digitados pelo usuario
 		li $v0, 4 # carrega o codigo de imprimir string
@@ -606,55 +560,61 @@ main:
 
 		li $v0, 5 #operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		#move $t1, $v0 #salva o valor lido em $t1
 		####
+
+
+		
+
+		beq $v0, 0, equalToZero
+
+		# Call fibonacci
+		move $a0, $v0
+		jal fib
+		move $a1, $v0 # save return value to a1
 
 		li $v0, 4 #carrega o cod de imprimir string
 		la $a0, result #imprime a string result
 		syscall
 
-		#div $a0, $t0, $t1 FAZER CALCULO DO FIBONACCI!!!!!!!!!!!
-		#######################calcula o fibonacci no intervalo dos valores salvos em $t0 e $t1 e salva em $a0 
-		#obs: $t0 = n1, $t1 = n2
-		li $t2, 2 # $t2 = aux = 2 (aux guarda quantos numeros ja temos na sequencia)
-		jal loop_fibonacci
-		
-		
-		#########################
-
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
-
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		# Print result
+		li $v0, 1
+		move $a0, $a1
 		syscall
 
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
+		j menu
 
 
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
-	
-		j menu #volta pro menu de opcoes	
-		
-		
-	loop_fibonacci:
-		#pegando os proximos dois numeros da sequencia fibonacci
-		add $t0, $t0, $t1 # n1 = n1 + n2
-		add $t1, $t1, $t0 #n2 = n2 + n1
-		
-		#guardando os numeros calculados no array
-		sw $t0, 0($t3)
-		sw $t1, 4($t3)
-		#e andando 'duas casas' no array, ou seja, 2 * 4 bytes, portanto, movendo 8 bytes
-		addiu $t3, $t3, 8
-		#atualizando o valor de aux = aux + 2 (pois ja adicionamos mais dois numeros fibonacci na sequencia
-		
-		j loop_fibonacci
+
+		## Function int fibonacci (int n)
+	fib:
+		# Prologue
+		addi $sp, $sp, -12
+		sw $ra, 8($sp)
+		sw $s0, 4($sp)
+		sw $s1, 0($sp)
+		move $s0, $a0
+		li $v0, 1 # return value for terminal condition
+		ble $s0, 0x2, fibonacciExit # check terminal condition
+		addi $a0, $s0, -1 # set args for recursive call to f(n-1)
+		jal fib
+		move $s1, $v0 # store result of f(n-1) to s1
+		addi $a0, $s0, -2 # set args for recursive call to f(n-2)
+		jal fib
+		add $v0, $s1, $v0 # add result of f(n-1) to it
+	fibonacciExit:
+		# Epilogue
+		lw $ra, 8($sp)
+		lw $s0, 4($sp)
+		lw $s1, 0($sp)
+		addi $sp, $sp, 12
 		jr $ra
-		
+		## End of function fibonacci
+
+	equalToZero:
+		li $v0, 4
+		la $a0, mensagem
+		syscall
 		
 	#========================================================================================
 	
