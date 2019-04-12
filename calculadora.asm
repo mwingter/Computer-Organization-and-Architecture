@@ -77,7 +77,7 @@ main:
 		la $a0, menu_potencia #printa s string menu_potencia
 		syscall
 				
-		#printando opcao 5 - raiz					FAZER
+		#printando opcao 5 - raiz					OK
 		li $v0, 4 #carrega o codigo de imprimir string
 		la $a0, menu_raiz #printa s string menu_raiz
 		syscall
@@ -92,12 +92,12 @@ main:
 		la $a0, menu_IMC #printa s string menu_IMC
 		syscall
 				
-		#printando opcao 8 - fatorial					FAZER
+		#printando opcao 8 - fatorial					OK
 		li $v0, 4 #carrega o codigo de imprimir string
 		la $a0, menu_fatorial #printa s string menu_fatorial
 		syscall
 				
-		#printando opcao 9 - fibonacci					FAZER
+		#printando opcao 9 - fibonacci					NAO FUNFA
 		li $v0, 4 #carrega o codigo de imprimir string
 		la $a0, menu_fibonacci #printa s string menu_fibonacci
 		syscall
