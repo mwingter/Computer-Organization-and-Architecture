@@ -15,8 +15,8 @@
 # Cálculo da sequência de Fibonacci dado um intervalo (a,b) definido pelo usuário (2 parâmetros)
 # Encerrar o programa
 
-		.data
-		.align 0
+.data
+.align 0
 	
 menu_title:	.asciiz "\nDigite a operacao desejada: "
 menu_soma:	.asciiz "\n0 - Somar dois numeros.\n"
@@ -41,7 +41,7 @@ str_erro:	.asciiz "Opcao invalida.\n"
 
 barra_ene:	.asciiz "\n"
 
-		.text
+.text
 		.globl main
 		
 main:
@@ -511,7 +511,7 @@ main:
 	#========================================================================================
 	
 	#============== Funcao de FATORIAL ======================================================
-	fatorial: #se num digitado = 8, calcular fatorial
+	main_fatorial: #se num digitado = 8, calcular fatorial
 		#addi $sp, $sp, -8 #aloca espaco na memoria
 		#sw $a0, 0($sp)
 		#sw $ra, 4($sp) #empilha $ra
@@ -523,18 +523,31 @@ main:
 
 		li $v0, 5 #operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0 <=====
+		move $a0, $v0 #salva o valor lido em $t0 <=====
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
-		syscall
+
 
 		# FAZER CALCULO DO FATORIAL!!!!!!!!!!! numero salvo em $t0, salvar o resultado em $a0
 		#######################calcula o fatorial do valor salvo em $t0 e salva em $a0 => $a0 = fatorial($t0)
-
+		
+		jal fatorial
+		
+		move $t1, $v0 #t1 = retorno do fatorial
+		
+		
 		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
+		move $a0, $t1
+		syscall
+		
+		###########
+
+		#li $v0, 
+		#syscall #imprime o resultado salvo em $a0 = $t0 / $t1
+		
+		li $v0, 4 #carrega o cod de imprimir string
+		la $a0, result #imprime a string result
+		syscall
 
 		li $v0, 4 #carrega o cod de imprimir string
 		la $a0, barra_ene #imprime a string \n
@@ -547,8 +560,29 @@ main:
 		#lw $ra, -4($sp)
 		#addi $sp, $sp, 8
 		#jr $ra
+
 	
-		j menu #volta pro menu de opcoes		
+		j menu #volta pro menu de opcoes
+		
+	fatorial:
+		addi $sp, $sp, -8 #aloca espaço para dois inteiros na pilha
+		sw $a0, 0($sp) #salva o numero lido na primeira posicao da pilha
+		sw $ra, 4($sp) #salva o endereco de retorno na segunda posicao da pilha
+		addi $t0, $zero, 1 # $t0 = 1, condicao de parada
+		addi $v0, $zero, 1 #v0 = 1 (fat=1)
+		
+	loop_fat:
+		ble $a0, $t0, sai_loop_fat
+		mul $v0, $v0, $a0
+		addi $a0, $a0, -1
+		j loop_fat
+		
+	sai_loop_fat:
+		lw $a0, 0($sp)
+		lw $ra, 4($sp)
+		addi $sp, $sp, 8
+		jr $ra
+		
 	#========================================================================================
 	
 	#============== Funcao de FIBONACCI =====================================================
