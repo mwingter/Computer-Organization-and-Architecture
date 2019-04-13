@@ -35,6 +35,10 @@ num_a:		.asciiz "\nDigite o primeiro numero: "
 num_b:		.asciiz "Digite o segundo numero: "
 num_unico:	.asciiz "\nDigite um numero: "
 
+str_peso: 	.asciiz "Digite o Peso (em kg) "
+str_altura: 	.asciiz "Digite a Altura (em m) "
+resultIMC:		.asciiz "O IMC é =  "
+
 result:		.asciiz "==> O resultado da operacao eh = "
 
 str_erro:	.asciiz "Opcao invalida.\n"
@@ -485,9 +489,38 @@ main:
 	
 	#=============== Funcao de IMC ==========================================================
 	IMC: #se num digitado = 7, calcular IMC
-	
-	
-	
+		li $v0, 4	#Codigo para printar uma string
+		la $a0, str_peso 
+		syscall
+		
+		li $v0, 6	#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
+		syscall
+		mov.s $f1, $f0 #f1 = peso
+		
+		li $v0, 4						#Codigo para printar uma string
+		la $a0, str_altura 
+		syscall
+		
+		li $v0, 6	#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
+		syscall
+		mov.s $f2, $f0 #f2 = altura
+		
+		# Calculando altura x altura
+		mul.s $f3, $f2, $f2 	# $f3 = altura ao quadrado
+		
+		#fazendo IMC = Peso/Altura2 = $f1 / $f3	
+		div.s $f4, $f1, $f3 # = IMC
+				
+		#printando o resultado
+		li $v0, 4	#Codigo para printar uma string
+		la $a0, resultIMC
+		syscall
+		
+		li $v0, 2	#Codigo para printar float, deve-ser passar o valor a ser printado pra $f12
+		mov.s $f12, $f4
+		syscall
+		
+		j menu
 	#========================================================================================
 	
 	#============== Funcao de FATORIAL ======================================================
