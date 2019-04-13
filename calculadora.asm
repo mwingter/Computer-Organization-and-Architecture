@@ -2,7 +2,7 @@
 # @author Michelle Wingter da Silva, 10783243
 
 
-#### TRABALHO 1 - CALCULADORA COM AS OPÇÕES ####
+#### TRABALHO 1 - CALCULADORA COM AS OPÇÕES #########
 # Soma de 2 números (2 parâmetros)
 # Subtração de 2 números (2 parâmetros)
 # Multiplicação de 2 números, limitados a 16 bits cada um (2 parâmetros)
@@ -14,6 +14,7 @@
 # Fatorial de 1 número fornecido (1 parâmetro)
 # Cálculo da sequência de Fibonacci dado um intervalo (a,b) definido pelo usuário (2 parâmetros)
 # Encerrar o programa
+######################################################
 
 .data
 .align 0
@@ -47,7 +48,7 @@ barra_ene:	.asciiz "\n"
 mensagem:	.asciiz "zero"
 
 .align 2
-	number_0: .float 0.00000001						#Raiz quadrada com erro menor ou igual a 0.00000001
+	number_0: .float 0.00000001	#Raiz quadrada com erro menor ou igual a 0.00000001
 	number_1: .float 2.0
 
 .text
@@ -57,369 +58,317 @@ main:
 	menu:
 		# ============= Printando o menu de opcoes ===============
 		#printando opcao 0 - soma					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_soma #printa s string menu_soma
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_soma 	#printa s string menu_soma
 		syscall
 			
 		#printando opcao 1 - subtracao					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_subtrai #printa s string menu_subtrai
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_subtrai 	#printa s string menu_subtrai
 		syscall
 				
 		#printando opcao 2 - multiplicacao				OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_multiplica #printa s string menu_multiplica
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_multiplica	#printa s string menu_multiplica
 		syscall
 			
 		#printando opcao 3 - divisao					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_divide #printa s string menu_divide
+		li $v0, 4		#carrega o codigo de imprimir string
+		la $a0, menu_divide 	#printa s string menu_divide
 		syscall
 			
 		#printando opcao 4 - potenciacao				FAZER
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_potencia #printa s string menu_potencia
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_potencia 	#printa s string menu_potencia
 		syscall
 				
 		#printando opcao 5 - raiz					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_raiz #printa s string menu_raiz
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_raiz 	#printa s string menu_raiz
 		syscall
 				
 		#printando opcao 6 - tabuada					FAZER
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_tabuada #printa s string menu_tabuada
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_tabuada 	#printa s string menu_tabuada
 		syscall
 				
-		#printando opcao 7 - IMC					FAZER
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_IMC #printa s string menu_IMC
+		#printando opcao 7 - IMC					OK
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_IMC 	#printa s string menu_IMC
 		syscall
 				
 		#printando opcao 8 - fatorial					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_fatorial #printa s string menu_fatorial
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_fatorial 	#printa s string menu_fatorial
 		syscall
 				
-		#printando opcao 9 - fibonacci					NAO FUNFA
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_fibonacci #printa s string menu_fibonacci
+		#printando opcao 9 - fibonacci					FAZER
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_fibonacci 	#printa s string menu_fibonacci
 		syscall
 				
-		#printando opcao 10 - sair					OK
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_sair #printa s string menu_sair
+		#printando opcao 10 - sair					
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_sair 	#printa s string menu_sair
 		syscall
 		
 		#printando "Digite a operacao desejada"
-		li $v0, 4 #carrega o codigo de imprimir string
-		la $a0, menu_title #printa s string menu_title
+		li $v0, 4 		#carrega o codigo de imprimir string
+		la $a0, menu_title 	#printa s string menu_title
 		syscall
 		#==========================================================
 				
 		#====== Lendo a opcao digitada pelo usuario ===============
-		li $v0, 5 #carrega o codigo de ler int
+		li $v0, 5 		#carrega o codigo de ler int
 		syscall
 		
-		move $a0, $v0 #salva em $a0 o num. digitado pelo usuario
+		move $a0, $v0 		#salva em $a0 o num. digitado pelo usuario
 		#==========================================================
 
 
 		#=== Procurando a opcao escolhida pelo usuario ============
-		blt $a0, 0, erro #se num digitado < 0, mostra mensagem de erro
-		bgt $a0, 10, erro #se num digitado > 10, mostra mensagem de erro
+		blt $a0, 0, erro 	#se num digitado < 0, mostra mensagem de erro
+		bgt $a0, 10, erro 	#se num digitado > 10, mostra mensagem de erro
 		
-		beq $a0, 0, somar #se num digitado = 0, realizar soma
-		beq $a0, 1, subtrair #se num digitado = 1, realizar subtracao
+		beq $a0, 0, somar 	#se num digitado = 0, realizar soma
+		beq $a0, 1, subtrair 	#se num digitado = 1, realizar subtracao
 		beq $a0, 2, multiplicar #se num digitado = 2, realizar multiplicacao
-		beq $a0, 3, dividir #se num digitado = 3, realizar divisao
-		beq $a0, 4, potencia #se num digitado = 4, realizar potenciacao
-		beq $a0, 5, raiz #se num digitado = 5, realizar raiz
-		beq $a0, 6, tabuada #se num digitado = 6, realizar tabuada
-		beq $a0, 7, IMC #se num digitado = 7, calcular IMC
-		beq $a0, 8, fatorial #se num digitado = 8, calcular fatorial
-		beq $a0, 9, fibonacci #se num digitado = 9, calcular fibonacci
-		beq $a0, 10, sair #se num digitado = 10, finalizar programa
+		beq $a0, 3, dividir 	#se num digitado = 3, realizar divisao
+		beq $a0, 4, potencia 	#se num digitado = 4, realizar potenciacao
+		beq $a0, 5, raiz 	#se num digitado = 5, realizar raiz
+		beq $a0, 6, tabuada 	#se num digitado = 6, realizar tabuada
+		beq $a0, 7, IMC 	#se num digitado = 7, calcular IMC
+		beq $a0, 8, fatorial 	#se num digitado = 8, calcular fatorial
+		beq $a0, 9, fibonacci 	#se num digitado = 9, calcular fibonacci
+		beq $a0, 10, sair 	#se num digitado = 10, finalizar programa
 		#===========================================================
 		
 	#==================== Funcao de ERRO ===================================================
 	erro: #se num digitado < 0, mostra mensagem de erro
-		li $v0, 4 #carrega codigo de printar string
-		la $a0, str_erro #printa a string erro
+		li $v0, 4 		#carrega codigo de printar string
+		la $a0, str_erro 	#printa a string erro
 		syscall
-		j menu #volta pro menu de opcoes
+		j menu 			#volta pro menu de opcoes
 	#========================================================================================
 	
 	#==================== Funcao de SOMA ====================================================
 	somar:  #se num digitado = 0, realizar soma
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
 		
 		### prntando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5		#operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		move $t1, $v0 		#salva o valor lido em $t1
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
-		add $a0, $t0, $t1 #calcula a soma os valores salvos em $t0 + $t1 e salva em $a0
+		add $a0, $t0, $t1 	#calcula a soma os valores salvos em $t0 + $t1 e salva em $a0
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 + $t1
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 + $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
 	
-		j menu #volta pro menu de opcoes
+		j menu 			#volta pro menu de opcoes
 	#========================================================================================
 	
 	#================ Funcao de SUBTRACAO ===================================================		
 	subtrair: #se num digitado = 1, realizar subtracao
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
 		
 		### printando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5 		#operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		move $t1, $v0 		#salva o valor lido em $t1
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
-		sub $a0, $t0, $t1 #calcula a subtracao dos valores salvos em $t0 - $t1 e salva em $a0
+		sub $a0, $t0, $t1 	#calcula a subtracao dos valores salvos em $t0 - $t1 e salva em $a0
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 - $t1
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 - $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
 	
-		j menu #volta pro menu de opcoes		
+		j menu 			#volta pro menu de opcoes		
 	#========================================================================================
 	
 	#================ Funcao de MULTIPLICACAO ===============================================
 	multiplicar: #se num digitado = 2, realizar multiplicacao
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
-		
+
 		### printando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5 		#operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		move $t1, $v0 		#salva o valor lido em $t1
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
-		mul $a0, $t0, $t1 #calcula a multiplicacao dos valores salvos em $t0 * $t1 e salva em $a0
+		mul $a0, $t0, $t1 	#calcula a multiplicacao dos valores salvos em $t0 * $t1 e salva em $a0
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 * $t1
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 * $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
 
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
-	
-		j menu #volta pro menu de opcoes	
+		j menu 			#volta pro menu de opcoes	
 	#========================================================================================
 		
 	#=============== Funcao de DIVISAO ======================================================
 	dividir: #se num digitado = 3, realizar divisao
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
 		
 		### printando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5 		#operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		move $t1, $v0 		#salva o valor lido em $t1
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
-		div $a0, $t0, $t1 #calcula a divisao dos valores salvos em $t0 / $t1 e salva em $a0
+		div $a0, $t0, $t1 	#calcula a divisao dos valores salvos em $t0 / $t1 e salva em $a0
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 / $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
 
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
-	
-		j menu #volta pro menu de opcoes		
+		j menu 			#volta pro menu de opcoes		
 	#========================================================================================
 	
 	#=============== Funcao de POTENCIACAO ==================================================
 	potencia: #se num digitado = 4, realizar potenciacao
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
-		
+
 		### printando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5 		#operação de ler int - le o segundo numero
 		syscall
-		move $t1, $v0 #salva o valor lido em $t1
+		move $t1, $v0 		#salva o valor lido em $t1
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
+		##############
 		# FAZER CALCULO DA POTENCIACAO!!!!!!!!!!!
 		#calcula a potencia dos valores salvos em $t0 e $t1 e salva em $a0 => $a0 = $t0 ^ $t1
+		##############
+		
 		
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 / $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
 	
-		j menu #volta pro menu de opcoes
+		j menu 			#volta pro menu de opcoes
 	
 	#========================================================================================
 	
 	#============== Funcao de RAIZ QUADRADA =================================================
 	raiz: #se num digitado = 5, realizar raiz
 		### printando e lendo o numero digitado pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_unico # imprime a string num_unico
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_unico 	# imprime a string num_unico
 		syscall
 
-		li $v0, 6						#Codigo para ler um double, o ponto flutuante lido sera armazenado no registrador $f0
+		li $v0, 6		#Codigo para ler um double, o ponto flutuante lido sera armazenado no registrador $f0
 		syscall
 			
-		l.s $f1, number_0					#Setando o registrador $f1 com o number_0
-		l.s $f2, number_1					#Setando o registrador $f2 com o number_1
-		mov.s $f4, $f2						#$f4 sempre sera o valor anterior
+		l.s $f1, number_0	#Setando o registrador $f1 com o number_0
+		l.s $f2, number_1	#Setando o registrador $f2 com o number_1
+		mov.s $f4, $f2		#$f4 sempre sera o valor anterior
 						 								
-	loop:							#raiz->numero digitado, "chute" inicial->x0 
-		div.s $f3, $f0, $f4				#fazendo a div->(raiz/x0)	
-		add.s $f3, $f3, $f4				#fazendo a sum->(div+x0)
-		div.s $f5, $f3, $f2				#fazendo a x1->(sum/2)
+	loop:				#raiz->numero digitado, "chute" inicial->x0 
+		div.s $f3, $f0, $f4	#fazendo a div->(raiz/x0)	
+		add.s $f3, $f3, $f4	#fazendo a sum->(div+x0)
+		div.s $f5, $f3, $f2	#fazendo a x1->(sum/2)
 							
- 		c.le.s $f5, $f4					#Se x1 < x0, x2 = x0-x1
+ 		c.le.s $f5, $f4		#Se x1 < x0, x2 = x0-x1
 		bc1t sub_1						
-		c.le.s $f4, $f5					#Se x1 > x0, x2 = x1-x0 
+		c.le.s $f4, $f5		#Se x1 > x0, x2 = x1-x0 
 		bc1t sub_2
 		  
 	loop_1 :
-		c.le.s $f6, $f1					#se x2 <= 0.00000001(Erro) o programa finalizara 
-		bc1t final_program				#se nao x0 = x1 e loop continuara
+		c.le.s $f6, $f1		#se x2 <= 0.00000001(Erro) o programa finalizara 
+		bc1t final_program	#se nao x0 = x1 e loop continuara
 		mov.s $f4, $f5				
 		j loop
 				
@@ -431,132 +380,121 @@ main:
 		j loop_1
 						
 	final_program:
-		li $v0, 4					#Codigo para printar uma string 
+		li $v0, 4		#Codigo para printar uma string 
 		la $a0, result					
 		syscall
 				
-		li $v0, 2 					#Codigo para printar um float
-		mov.s $f12, $f5					#Movendo o resultado da raiz quadrada para o registrador $f12 
+		li $v0, 2 		#Codigo para printar um float
+		mov.s $f12, $f5		#Movendo o resultado da raiz quadrada para o registrador $f12 
 		syscall
 			
-		j menu #volta pro menu de opcoes
+		j menu 			#volta pro menu de opcoes
 		
     	
 	#========================================================================================
 	
 	#============== Funcao de TABUADA =======================================================
 	tabuada: #se num digitado = 6, realizar tabuada
-		#addi $sp, $sp, -8 #aloca espaco na memoria
-		#sw $a0, 0($sp)
-		#sw $ra, 4($sp) #empilha $ra
-		
+	
 		### printando e lendo o numero digitado pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_unico # imprime a string num_unico
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_unico	# imprime a string num_unico
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0 <=====
+		move $t0, $v0 		#salva o valor lido em $t0 <=====
 		####
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, result 		#imprime a string result
 		syscall
 
+		#######################
 		# FAZER A TABUADA DO numero salvo em $t0 e printar
 		#######################
 
-		li $v0, 1 #carrega o cod de imprimir int
-		syscall #imprime o resultado salvo em $a0 = $t0 / $t1
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 1 		#carrega o cod de imprimir int
+		syscall 		#imprime o resultado salvo em $a0 = $t0 / $t1
+
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
-
-		#li $v0, 5 # carrega o cod de ler int
-		#syscall
-
-
-		#lw $ra, -4($sp)
-		#addi $sp, $sp, 8
-		#jr $ra
 	
-		j menu #volta pro menu de opcoes
-	
-	
+		j menu 			#volta pro menu de opcoes
 	#========================================================================================
 	
 	#=============== Funcao de IMC ==========================================================
 	IMC: #se num digitado = 7, calcular IMC
-		li $v0, 4	#Codigo para printar uma string
+		li $v0, 4		#Codigo para printar uma string
 		la $a0, str_peso 
 		syscall
 		
-		li $v0, 6	#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
+		li $v0, 6		#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
 		syscall
-		mov.s $f1, $f0 #f1 = peso
+		mov.s $f1, $f0 		#f1 = peso
 		
-		li $v0, 4						#Codigo para printar uma string
+		li $v0, 4		#Codigo para printar uma string
 		la $a0, str_altura 
 		syscall
 		
-		li $v0, 6	#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
+		li $v0, 6		#Codigo para ler um float, o ponto flutuante lido sera armazenado no registrador $f0
 		syscall
-		mov.s $f2, $f0 #f2 = altura
+		mov.s $f2, $f0 		#f2 = altura
 		
 		# Calculando altura x altura
 		mul.s $f3, $f2, $f2 	# $f3 = altura ao quadrado
 		
 		#fazendo IMC = Peso/Altura2 = $f1 / $f3	
-		div.s $f4, $f1, $f3 # = IMC
+		div.s $f4, $f1, $f3 	# = IMC
 				
 		#printando o resultado
-		li $v0, 4	#Codigo para printar uma string
+		li $v0, 4		#Codigo para printar uma string
 		la $a0, resultIMC
 		syscall
 		
-		li $v0, 2	#Codigo para printar float, deve-ser passar o valor a ser printado pra $f12
+		li $v0, 2		#Codigo para printar float, deve-ser passar o valor a ser printado pra $f12
 		mov.s $f12, $f4
 		syscall
 		
-		j menu
+		j menu 			#volta pro menu de opcoes
 	#========================================================================================
 	
 	#============== Funcao de FATORIAL ======================================================
 	fatorial:
 		### printando e lendo o numero digitado pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_unico # imprime a string num_unico
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_unico 	# imprime a string num_unico
 		syscall
 	
-		li $v0, 5 #lê o numero digitado
+		li $v0, 5 		#lê o numero digitado
 		syscall
 	
-		move $a0, $v0 #salva em $a0 o num digitado pelo user
+		move $a0, $v0 		#salva em $a0 o num digitado pelo user
 	
 		jal fat
 	
-		move $t0, $a0 #salva em $t0 o num digitado
-		move $t1, $v0 #salva em $t1 o fatorial calculado
+		move $t0, $a0 		#salva em $t0 o num digitado
+		move $t1, $v0 		#salva em $t1 o fatorial calculado
 		
-		li $v0, 4 #serviço 4 = imprimir string
-		la $a0, result #imprime a string "O resultado é: "
+		li $v0, 4 		#serviço 4 = imprimir string
+		la $a0, result 		#imprime a string "O resultado é: "
 		syscall
 	
-		li $v0, 1 #serviço 1 = imprime int
-		move $a0, $t1 #salva o valor de $t1 (=valor do fatorial calculado) em $a0 para poder printar
-		syscall #printei o valor do fatorial calculado
+		li $v0, 1 		#serviço 1 = imprime int
+		move $a0, $t1 		#salva o valor de $t1 (=valor do fatorial calculado) em $a0 para poder printar
+		syscall 		#printei o valor do fatorial calculado
 		
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, barra_ene #imprime a string \n
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, barra_ene 	#imprime a string \n
 		syscall
 	
-		j menu #volta pro menu de opcoes
+		j menu 			#volta pro menu de opcoes
 	
 	
 	fat:
-		addi $sp, $sp, -8 #desci na stack
+		addi $sp, $sp, -8 
 		sw $a0, 0($sp)
 		sw $ra, 4($sp)
 		addi $t3, $zero, 1
@@ -579,81 +517,36 @@ main:
 	fibonacci: #se num digitado = 9, calcular fibonacci
 		
 		### printando e lendo os numeros digitados pelo usuario
-		li $v0, 4 # carrega o codigo de imprimir string
-		la $a0, num_a # imprime a string num_a
+		li $v0, 4 		# carrega o codigo de imprimir string
+		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 #operação de ler int - le o primeiro numero
+		li $v0, 5 		#operação de ler int - le o primeiro numero
 		syscall
-		move $t0, $v0 #salva o valor lido em $t0
+		move $t0, $v0 		#salva o valor lido em $t0
 
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, num_b #imprime a string num_b
+		li $v0, 4 		#carrega o cod de imprimir string
+		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 #operação de ler int - le o segundo numero
+		li $v0, 5 		#operação de ler int - le o segundo numero
 		syscall
 		#move $t1, $v0 #salva o valor lido em $t1
-		####
+		
+		##########
+		#FAZER FIBONACCI
+		##########
 
 
 		
 
-		beq $v0, 0, equalToZero
-
-		# Call fibonacci
-		move $a0, $v0
-		jal fib
-		move $a1, $v0 # save return value to a1
-
-		li $v0, 4 #carrega o cod de imprimir string
-		la $a0, result #imprime a string result
-		syscall
-
-		# Print result
-		li $v0, 1
-		move $a0, $a1
-		syscall
-
-		j menu
-
-
-
-		## Function int fibonacci (int n)
-	fib:
-		# Prologue
-		addi $sp, $sp, -12
-		sw $ra, 8($sp)
-		sw $s0, 4($sp)
-		sw $s1, 0($sp)
-		move $s0, $a0
-		li $v0, 1 # return value for terminal condition
-		ble $s0, 0x2, fibonacciExit # check terminal condition
-		addi $a0, $s0, -1 # set args for recursive call to f(n-1)
-		jal fib
-		move $s1, $v0 # store result of f(n-1) to s1
-		addi $a0, $s0, -2 # set args for recursive call to f(n-2)
-		jal fib
-		add $v0, $s1, $v0 # add result of f(n-1) to it
-	fibonacciExit:
-		# Epilogue
-		lw $ra, 8($sp)
-		lw $s0, 4($sp)
-		lw $s1, 0($sp)
-		addi $sp, $sp, 12
-		jr $ra
-		## End of function fibonacci
-
-	equalToZero:
-		li $v0, 4
-		la $a0, mensagem
-		syscall
+		j menu			#volta pro menu de opcoes
 		
 	#========================================================================================
 	
 	#============== Funcao de SAIR ==========================================================
 	sair: #se num digitado = 10, finalizar programa
-		li $v0, 10 #encerra o programa
+		li $v0, 10 		#encerra o programa
 		syscall
 	#========================================================================================
 		
