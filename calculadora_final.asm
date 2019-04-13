@@ -700,6 +700,8 @@ main:
 		blt $v0, $zero, exit_neg			#Vendo se o numero digitado eh negativo
 		move $t1, $v0					#Guardando o fim do intervalo no registrador $t1
 		
+		beq $t0, $zero, exit_intervalo			#Verificando se o numero eh zero
+		beq $t0, $zero, exit_intervalo			#Verificando se o numero eh zero	
 		bgt $t0, $t1, exit_intervalo			#Vendo se o intervalo eh valido	
 		
 		li $t2, 1					#Primeiro elemento da sequencia de fibonacci
