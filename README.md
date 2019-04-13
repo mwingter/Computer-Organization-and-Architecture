@@ -6,7 +6,7 @@
 
 ### University of Sao Paulo
 
-Professor Marcio Eduardo Delamaro
+Professora Sarita Mazzini Bruschi
 
 Michelle Wingter da Silva
 2019.1
