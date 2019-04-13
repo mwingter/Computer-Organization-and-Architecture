@@ -1,20 +1,20 @@
-# Universidade de São Paulo - ICMC abril/2019
+# Universidade de Sï¿½o Paulo - ICMC abril/2019
 # @author Michelle Wingter da Silva, 10783243
 
 
-#### TRABALHO 1 - CALCULADORA COM AS OPÇÕES #########
-# Soma de 2 números (2 parâmetros)
-# Subtração de 2 números (2 parâmetros)
-# Multiplicação de 2 números, limitados a 16 bits cada um (2 parâmetros)
-# Divisão de 2 números, , limitados a 16 bits cada um (2 parâmetros)
-# Potência (2 parâmetros)
-# Raiz quadrada (1 parâmetro)
-# Tabuada de 1 número fornecido (1 parâmetro)
-# Cálculo do IMC (Índice de Massa Corporal) (2 parâmetros)
-# Fatorial de 1 número fornecido (1 parâmetro)
-# Cálculo da sequência de Fibonacci dado um intervalo (a,b) definido pelo usuário (2 parâmetros)
+#### TRABALHO 1 - CALCULADORA COM AS OPï¿½ï¿½ES #########
+# Soma de 2 nï¿½meros (2 parï¿½metros)
+# Subtraï¿½ï¿½o de 2 nï¿½meros (2 parï¿½metros)
+# Multiplicaï¿½ï¿½o de 2 nï¿½meros, limitados a 16 bits cada um (2 parï¿½metros)
+# Divisï¿½o de 2 nï¿½meros, , limitados a 16 bits cada um (2 parï¿½metros)
+# Potï¿½ncia (2 parï¿½metros)
+# Raiz quadrada (1 parï¿½metro)
+# Tabuada de 1 nï¿½mero fornecido (1 parï¿½metro)
+# Cï¿½lculo do IMC (ï¿½ndice de Massa Corporal) (2 parï¿½metros)
+# Fatorial de 1 nï¿½mero fornecido (1 parï¿½metro)
+# Cï¿½lculo da sequï¿½ncia de Fibonacci dado um intervalo (a,b) definido pelo usuï¿½rio (2 parï¿½metros)
 # Encerrar o programa
-######################################################
+#################################################
 
 .data
 .align 0
@@ -27,7 +27,7 @@ menu_divide:	.asciiz "3 - Dividir dois numeros.\n"
 menu_potencia:	.asciiz "4 - Elevar um numero a uma potencia.\n"
 menu_raiz:	.asciiz "5 - Calcular a raiz quadrada de um numero.\n"
 menu_tabuada:	.asciiz "6 - Mostrar a tabuada de um numero.\n"
-menu_IMC:	.asciiz "7 - Calcular o IMC (Índice de Massa Corporal) de uma pessoa.\n"
+menu_IMC:	.asciiz "7 - Calcular o IMC (ï¿½ndice de Massa Corporal) de uma pessoa.\n"
 menu_fatorial:	.asciiz "8 - Calcular o fatorial de um numero.\n"
 menu_fibonacci:	.asciiz "9 - Calcular a sequencia de Fibonacci de um intervalo de dois numeros.\n"
 menu_sair:	.asciiz "10 - Sair.\n"
@@ -38,7 +38,7 @@ num_unico:	.asciiz "\nDigite um numero: "
 
 str_peso: 	.asciiz "Digite o Peso (em kg) "
 str_altura: 	.asciiz "Digite a Altura (em m) "
-resultIMC:		.asciiz "O IMC é =  "
+resultIMC:		.asciiz "O IMC ï¿½ =  "
 
 result:		.asciiz "==> O resultado da operacao eh = "
 
@@ -102,7 +102,7 @@ main:
 		la $a0, menu_fatorial 	#printa s string menu_fatorial
 		syscall
 				
-		#printando opcao 9 - fibonacci					FAZER
+		#printando opcao 9 - fibonacci					NAO FUNFA
 		li $v0, 4 		#carrega o codigo de imprimir string
 		la $a0, menu_fibonacci 	#printa s string menu_fibonacci
 		syscall
@@ -159,7 +159,7 @@ main:
 		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -167,7 +167,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5		#operação de ler int - le o segundo numero
+		li $v0, 5		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		move $t1, $v0 		#salva o valor lido em $t1
 		####
@@ -196,7 +196,7 @@ main:
 		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -204,7 +204,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o segundo numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		move $t1, $v0 		#salva o valor lido em $t1
 		####
@@ -233,7 +233,7 @@ main:
 		la $a0, num_a		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -241,7 +241,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o segundo numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		move $t1, $v0 		#salva o valor lido em $t1
 		####
@@ -270,7 +270,7 @@ main:
 		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -278,7 +278,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o segundo numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		move $t1, $v0 		#salva o valor lido em $t1
 		####
@@ -307,7 +307,7 @@ main:
 		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -315,7 +315,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o segundo numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		move $t1, $v0 		#salva o valor lido em $t1
 		####
@@ -401,7 +401,7 @@ main:
 		la $a0, num_unico	# imprime a string num_unico
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0 <=====
 		####
@@ -468,7 +468,7 @@ main:
 		la $a0, num_unico 	# imprime a string num_unico
 		syscall
 	
-		li $v0, 5 		#lê o numero digitado
+		li $v0, 5 		#lï¿½ o numero digitado
 		syscall
 	
 		move $a0, $v0 		#salva em $a0 o num digitado pelo user
@@ -478,11 +478,11 @@ main:
 		move $t0, $a0 		#salva em $t0 o num digitado
 		move $t1, $v0 		#salva em $t1 o fatorial calculado
 		
-		li $v0, 4 		#serviço 4 = imprimir string
-		la $a0, result 		#imprime a string "O resultado é: "
+		li $v0, 4 		#serviï¿½o 4 = imprimir string
+		la $a0, result 		#imprime a string "O resultado ï¿½: "
 		syscall
 	
-		li $v0, 1 		#serviço 1 = imprime int
+		li $v0, 1 		#serviï¿½o 1 = imprime int
 		move $a0, $t1 		#salva o valor de $t1 (=valor do fatorial calculado) em $a0 para poder printar
 		syscall 		#printei o valor do fatorial calculado
 		
@@ -521,7 +521,7 @@ main:
 		la $a0, num_a 		# imprime a string num_a
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o primeiro numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o primeiro numero
 		syscall
 		move $t0, $v0 		#salva o valor lido em $t0
 
@@ -529,7 +529,7 @@ main:
 		la $a0, num_b 		#imprime a string num_b
 		syscall
 
-		li $v0, 5 		#operação de ler int - le o segundo numero
+		li $v0, 5 		#operaï¿½ï¿½o de ler int - le o segundo numero
 		syscall
 		#move $t1, $v0 #salva o valor lido em $t1
 		
